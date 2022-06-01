@@ -391,7 +391,7 @@
     sudo sed -i 's/CFLAGS += -DNO_EXCHANGE/#CFLAGS += -DNO_EXCHANGE/' $HOME/yiimp/stratum/Makefile
     fi
     make -j$((`nproc`+1))
-    
+
     # Copy Files (Blocknotify,iniparser,Stratum)
     cd $HOME/yiimp
     sudo sed -i 's/AdminRights/'AdminPanel'/' $HOME/yiimp/web/yaamp/modules/site/SiteController.php
@@ -432,7 +432,7 @@
     echo
     echo -e "$CYAN => Update default timezone. $COL_RESET"
     echo
-    
+
     echo -e " Setting TimeZone to UTC...$COL_RESET"
     if [ ! -f /etc/timezone ]; then
     echo "Setting timezone to UTC."
@@ -442,14 +442,14 @@
     sudo systemctl status rsyslog | sed -n "1,3p"
     echo
     echo -e "$GREEN Done...$COL_RESET"
-    
-    
+
+
     # Creating webserver initial config file
     echo
     echo
     echo -e "$CYAN => Creating webserver initial config file $COL_RESET"
     echo
-    
+
     # Adding user to group, creating dir structure, setting permissions
     sudo mkdir -p /var/www/$server_name/html
 
@@ -468,27 +468,27 @@
         root "/var/www/'"${server_name}"'/html/web";
         index index.html index.htm index.php;
         charset utf-8;
-    
+
         location / {
         try_files $uri $uri/ /index.php?$args;
         }
         location @rewrite {
         rewrite ^/(.*)$ /index.php?r=$1;
         }
-    
+
         location = /favicon.ico { access_log off; log_not_found off; }
         location = /robots.txt  { access_log off; log_not_found off; }
-    
+
         access_log /var/log/nginx/'"${server_name}"'.app-access.log;
         error_log /var/log/nginx/'"${server_name}"'.app-error.log;
-    
+
         # allow larger file uploads and longer script runtimes
     client_body_buffer_size  50k;
         client_header_buffer_size 50k;
         client_max_body_size 50k;
         large_client_header_buffers 2 50k;
         sendfile off;
-    
+
         location ~ ^/index\.php$ {
             fastcgi_split_path_info ^(.+\.php)(/.+)$;
             fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
@@ -537,15 +537,15 @@
     sudo systemctl reload php7.2-fpm.service
     sudo systemctl restart nginx.service
     echo -e "$GREEN Done...$COL_RESET"
-        
+
     if [[ ("$ssl_install" == "y" || "$ssl_install" == "Y" || "$ssl_install" == "") ]]; then
 
-    
+
     # Install SSL (with SubDomain)
     echo
     echo -e "Install LetsEncrypt and setting SSL (with SubDomain)"
     echo
-    
+
     sudo apt -y install letsencrypt
     sudo letsencrypt certonly -a webroot --webroot-path=/var/web --email "$EMAIL" --agree-tos -d "$server_name"
     sudo rm /etc/nginx/sites-available/$server_name.conf
@@ -565,7 +565,7 @@
         # enforce https
         return 301 https://$server_name$request_uri;
     }
-    
+
     server {
     if ($blockedagent) {
                 return 403;
@@ -576,20 +576,20 @@
             listen 443 ssl http2;
             listen [::]:443 ssl http2;
             server_name '"${server_name}"';
-        
+
             root /var/www/'"${server_name}"'/html/web;
             index index.php;
-        
+
             access_log /var/log/nginx/'"${server_name}"'.app-access.log;
             error_log  /var/log/nginx/'"${server_name}"'.app-error.log;
-        
+
             # allow larger file uploads and longer script runtimes
     client_body_buffer_size  50k;
         client_header_buffer_size 50k;
         client_max_body_size 50k;
         large_client_header_buffers 2 50k;
         sendfile off;
-        
+
             # strengthen ssl security
             ssl_certificate /etc/letsencrypt/live/'"${server_name}"'/fullchain.pem;
             ssl_certificate_key /etc/letsencrypt/live/'"${server_name}"'/privkey.pem;
@@ -598,22 +598,22 @@
             ssl_session_cache shared:SSL:10m;
             ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:ECDHE-RSA-AES128-GCM-SHA256:AES256+EECDH:DHE-RSA-AES128-GCM-SHA256:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
             ssl_dhparam /etc/ssl/certs/dhparam.pem;
-        
+
             # Add headers to serve security related headers
             add_header Strict-Transport-Security "max-age=15768000; preload;";
             add_header X-Content-Type-Options nosniff;
             add_header X-XSS-Protection "1; mode=block";
             add_header X-Robots-Tag none;
             add_header Content-Security-Policy "frame-ancestors 'self'";
-        
+
         location / {
         try_files $uri $uri/ /index.php?$args;
         }
         location @rewrite {
         rewrite ^/(.*)$ /index.php?r=$1;
         }
-    
-        
+
+
             location ~ ^/index\.php$ {
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
                 fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
