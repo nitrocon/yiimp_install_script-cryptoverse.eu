@@ -1,4 +1,4 @@
-# Yiimp_install_scrypt v0.2 (update Avril, 2020)
+# Yiimp_install_script cryptoverse.eu (update June, 2022)
 
 Site : https://www.xavatar.com
 
@@ -27,7 +27,7 @@ Connect on your VPS =>
 - exit 
 - su - pool
 - sudo apt -y install git
-- git clone https://github.com/eskal/yiimp_install_scrypt.git
+- git clone https://github.com/nitrocon/yiimp-cryptoverse.eu.git
 - cd yiimp_install_scrypt/
 - bash install.sh (DO NOT RUN THE SCRIPT AS ROOT or SUDO)
 - At the end, you MUST REBOOT to finalize installation...
