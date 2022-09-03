@@ -1,12 +1,12 @@
 #!/bin/bash
 ################################################################################
 # Original Author:   crombiecrunch
-# Modified by : Xavatar (https://github.com/xavatar/yiimp_install_scrypt)
-# Web: https://www.xavatar.com    
+# Modified by : nitrocon (https://github.com/nitrocon)
+# Web: https://pool.cryptoverse.eu
 #
 # Program:
 #   Install yiimp on Ubuntu 16.04/18.04 running Nginx, MariaDB, and php7.2
-#   v0.2 (update Avril, 2020)
+#   v0.2 (update September, 2022)
 # 
 ################################################################################
     
@@ -160,10 +160,10 @@
     echo -e "$GREEN Done...$COL_RESET"
 
     
-    # Installing Installing php7.4
+    # Installing Installing php7.2
     echo
     echo
-    echo -e "$CYAN => Installing php7.4 : $COL_RESET"
+    echo -e "$CYAN => Installing php7.2 : $COL_RESET"
     echo
     sleep 3
     
@@ -278,60 +278,6 @@
     sudo ufw allow ssh
     sudo ufw allow http
     sudo ufw allow https
-    sudo ufw allow 3333/tcp
-    sudo ufw allow 3339/tcp
-    sudo ufw allow 3334/tcp
-    sudo ufw allow 3433/tcp
-    sudo ufw allow 3555/tcp
-    sudo ufw allow 3556/tcp
-    sudo ufw allow 3573/tcp
-    sudo ufw allow 3535/tcp
-    sudo ufw allow 3533/tcp
-    sudo ufw allow 3553/tcp
-    sudo ufw allow 3633/tcp
-    sudo ufw allow 3733/tcp
-    sudo ufw allow 3636/tcp
-    sudo ufw allow 3737/tcp
-    sudo ufw allow 3739/tcp
-    sudo ufw allow 3747/tcp
-    sudo ufw allow 3833/tcp
-    sudo ufw allow 3933/tcp
-    sudo ufw allow 4033/tcp
-    sudo ufw allow 4133/tcp
-    sudo ufw allow 4233/tcp
-    sudo ufw allow 4234/tcp
-    sudo ufw allow 4333/tcp
-    sudo ufw allow 4433/tcp
-    sudo ufw allow 4533/tcp
-    sudo ufw allow 4553/tcp
-    sudo ufw allow 4633/tcp
-    sudo ufw allow 4733/tcp
-    sudo ufw allow 4833/tcp
-    sudo ufw allow 4933/tcp
-    sudo ufw allow 5033/tcp
-    sudo ufw allow 5133/tcp
-    sudo ufw allow 5233/tcp
-    sudo ufw allow 5333/tcp
-    sudo ufw allow 5433/tcp
-    sudo ufw allow 5533/tcp
-    sudo ufw allow 5733/tcp
-    sudo ufw allow 5743/tcp
-    sudo ufw allow 3252/tcp
-    sudo ufw allow 5755/tcp
-    sudo ufw allow 5766/tcp
-    sudo ufw allow 5833/tcp
-    sudo ufw allow 5933/tcp
-    sudo ufw allow 6033/tcp
-    sudo ufw allow 5034/tcp
-    sudo ufw allow 6133/tcp
-    sudo ufw allow 6233/tcp
-    sudo ufw allow 6333/tcp
-    sudo ufw allow 6433/tcp
-    sudo ufw allow 7433/tcp
-    sudo ufw allow 8333/tcp
-    sudo ufw allow 8463/tcp
-    sudo ufw allow 8433/tcp
-    sudo ufw allow 8533/tcp
     sudo ufw --force enable
     sleep 5
     sudo systemctl status ufw | sed -n "1,3p"   
@@ -364,7 +310,7 @@
     echo
     echo -e "$CYAN => Installing Yiimp $COL_RESET"
     echo
-    echo -e "Grabbing yiimp fron Github, building files and setting file structure."
+    echo -e "Grabbing yiimp from Github, building files and setting file structure."
     echo
     sleep 3
     
@@ -372,14 +318,14 @@
     # Generating Random Password for stratum
     blckntifypass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
     
-    # Compil Blocknotify
+    # Compile Blocknotify
     cd ~
-    git clone https://github.com/Kudaraidee/yiimp.git
+    git clone https://github.com/nitrocon/yiimp-cryptoverse.eu.git
     cd $HOME/yiimp/blocknotify
     sudo sed -i 's/tu8tu5/'$blckntifypass'/' blocknotify.cpp
     make -j$((`nproc`+1))
     
-    # Compil Stratum
+    # Compile Stratum
     cd $HOME/yiimp/stratum/
     git submodule init && git submodule update 
     make -C algos
@@ -1011,14 +957,14 @@
     
     define('"'"'YAAMP_LIMIT_ESTIMATE'"'"', false);
     
-    define('"'"'YAAMP_FEES_SOLO'"'"', 0.5);
+    define('"'"'YAAMP_FEES_SOLO'"'"', 0.8);
     
-    define('"'"'YAAMP_FEES_MINING'"'"', 0.5);
+    define('"'"'YAAMP_FEES_MINING'"'"', 0.8);
     define('"'"'YAAMP_FEES_EXCHANGE'"'"', 2);
     define('"'"'YAAMP_FEES_RENTING'"'"', 2);
     define('"'"'YAAMP_TXFEE_RENTING_WD'"'"', 0.002);
     
-    define('"'"'YAAMP_PAYMENTS_FREQ'"'"', 2*60*60);
+    define('"'"'YAAMP_PAYMENTS_FREQ'"'"', 0.1*60*60);
     define('"'"'YAAMP_PAYMENTS_MINI'"'"', 0.001);
     
     define('"'"'YAAMP_ALLOW_EXCHANGE'"'"', false);
@@ -1028,7 +974,7 @@
     define('"'"'YIIMP_FIAT_ALTERNATIVE'"'"', '"'"'USD'"'"'); // USD is main
     define('"'"'YAAMP_USE_NICEHASH_API'"'"', false);
     
-    define('"'"'YAAMP_BTCADDRESS'"'"', '"'"'1C1hnjk3WhuAvUN6Ny6LTxPD3rwSZwapW7'"'"');
+    define('"'"'YAAMP_BTCADDRESS'"'"', '"'"'15drtFuqpMqSdeEuyepKyvMgQWhcGQmXYP'"'"');
     
     define('"'"'YAAMP_SITE_URL'"'"', '"'"''"${server_name}"''"'"');
     define('"'"'YAAMP_STRATUM_URL'"'"', YAAMP_SITE_URL); // change if your stratum server is on a different host
@@ -1065,9 +1011,9 @@
     define('"'"'EXCH_AUTO_WITHDRAW'"'"', 0.3);
     
     // nicehash keys deposit account & amount to deposit at a time
-    define('"'"'NICEHASH_API_KEY'"'"','"'"'f96c65a7-3d2f-4f3a-815c-cacf00674396'"'"');
-    define('"'"'NICEHASH_API_ID'"'"','"'"'825979'"'"');
-    define('"'"'NICEHASH_DEPOSIT'"'"','"'"'3ABoqBjeorjzbyHmGMppM62YLssUgJhtuf'"'"');
+    define('"'"'NICEHASH_API_KEY'"'"','"'"'666'"'"');
+    define('"'"'NICEHASH_API_ID'"'"','"'"'666'"'"');
+    define('"'"'NICEHASH_DEPOSIT'"'"','"'"'666'"'"');
     define('"'"'NICEHASH_DEPOSIT_AMOUNT'"'"','"'"'0.01'"'"');
     
     $cold_wallet_table = array(
