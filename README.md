@@ -94,6 +94,6 @@ There will be several wallets already in yiimp. These have nothing to do with th
 
 If you need further assistance we have a small but growing discord channel at https://discord.gg/zcCXjkQ
 
-If this helped you or you feel giving please donate : 
+If this helped you donate to cryptoverse.eu: 
 - BTC Donation : 15drtFuqpMqSdeEuyepKyvMgQWhcGQmXYP
 - RTM Donation : RDv3xmo8RBe1hec7SpoT5SgtAnACq9EDx5
