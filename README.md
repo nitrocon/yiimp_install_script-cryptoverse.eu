@@ -27,8 +27,8 @@ Connect on your VPS =>
 - exit 
 - su - pool
 - sudo apt -y install git
-- git clone https://github.com/nitrocon/yiimp-cryptoverse.eu.git
-- cd yiimp_install_scrypt/
+- git clone https://github.com/nitrocon/yiimp_install_script-cryptoverse.eu.git
+- cd yiimp_install_script-cryptoverse.eu/
 - bash install.sh (DO NOT RUN THE SCRIPT AS ROOT or SUDO)
 - At the end, you MUST REBOOT to finalize installation...
 
