@@ -1,10 +1,8 @@
-# Yiimp_install_script cryptoverse.eu (update June, 2022)
+# Yiimp_install_script cryptoverse.eu (update September, 2022)
 
-Site : https://www.xavatar.com
+Site : https://pool.cryptoverse.eu
 
-Discord : https://discord.gg/zcCXjkQ
-
-TUTO Youtube (16.04 / 18.04 - Without SSL) : https://www.youtube.com/watch?v=qE0rhfJ1g2k
+Discord : https://discord.gg/Rv7hhpzQb9
 
 Official Yiimp (used in this script for Yiimp Installation): https://github.com/tpruvot/yiimp
 
@@ -18,19 +16,42 @@ Original Yiimp Installer : https://github.com/cryptopool-builders/multipool_orig
 USE THIS SCRIPT ON FRESH INSTALL UBUNTU Server 16.04 / 18.04 !
 
 Connect on your VPS =>
-- apt update
-- apt upgrade
+- sudo apt update
+- sudo apt -y upgrade 
+- adduser pool
+- usermod -aG sudo pool
 - reboot
-- adduser pool (pool it's just an example...)
-- adduser pool sudo
-- su - pool
-- exit 
-- su - pool
-- sudo apt -y install git
+- login pool
+- sudo ufw app list
+- sudo ufw allow OpenSSH
+- sudo ufw enable
+- sudo apt -y install nginx 
+- sudo ufw allow 'Nginx Full'
+- systemctl status nginx
+- sudo apt install git
+- REBOOT
 - git clone https://github.com/nitrocon/yiimp_install_script-cryptoverse.eu.git
-- cd yiimp_install_script-cryptoverse.eu/
+- cd yiimp_install_script-cryptoverse.eu
 - bash install.sh (DO NOT RUN THE SCRIPT AS ROOT or SUDO)
 - At the end, you MUST REBOOT to finalize installation...
+
+Install mysqltuner:
+- sudo apt-get install mysqltuner
+- sudo mysqltuner
+- cd /etc/mysql
+- sudo nano my.cnf
+- insert:
+
+[mysqld]
+performance_schema=ON
+performance-schema-instrument='stage/%=ON'
+performance-schema-consumer-events-stages-current=ON
+performance-schema-consumer-events-stages-history=ON
+performance-schema-consumer-events-stages-history-long=ON
+
+- sudo service mysql restart
+- sudo mysqltuner (wait for this at least 24hours to collect enough data)
+
 
 Finish !
 - Go http://xxx.xxx.xxx.xxx or https://xxx.xxx.xxx.xxx (if you have chosen LetsEncrypt SSL). Enjoy !
@@ -74,6 +95,5 @@ There will be several wallets already in yiimp. These have nothing to do with th
 If you need further assistance we have a small but growing discord channel at https://discord.gg/zcCXjkQ
 
 If this helped you or you feel giving please donate : 
-- BTC Donation : 1C1hnjk3WhuAvUN6Ny6LTxPD3rwSZwapW7
-- BCH Donation : 1PqjApUdjwU9k4v1RDWf6XveARyEXaiGUz
-- ETH Donation : 0xc23E6902fF8Cd8878EDADE18Dc49B3505395F0a1
+- BTC Donation : 15drtFuqpMqSdeEuyepKyvMgQWhcGQmXYP
+- RTM Donation : RDv3xmo8RBe1hec7SpoT5SgtAnACq9EDx5
