@@ -339,7 +339,7 @@
     make -j$((`nproc`+1))
 
     # Copy Files (Blocknotify,iniparser,Stratum)
-    cd $HOME/yiimp
+    cd $HOME/yiimp-cryptoverse.eu
     sudo sed -i 's/AdminRights/'AdminPanel'/' $HOME/yiimp-cryptoverse.eu/web/yaamp/modules/site/SiteController.php
     sudo cp -r $HOME/yiimp-cryptoverse.eu/web /var/
     sudo mkdir -p /var/stratum
