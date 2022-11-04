@@ -160,7 +160,7 @@
     echo -e "$GREEN Done...$COL_RESET"
 
     
-    # Installing Installing php7.2
+    # Installing Installing php7.3
     echo
     echo
     echo -e "$CYAN => Installing php7.3 : $COL_RESET"
