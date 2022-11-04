@@ -321,36 +321,36 @@
     # Compile Blocknotify
     cd ~
     git clone https://github.com/nitrocon/yiimp-cryptoverse.eu.git
-    cd $HOME/yiimp/blocknotify
+    cd $HOME/yiimp-cryptoverse.eu/blocknotify
     sudo sed -i 's/tu8tu5/'$blckntifypass'/' blocknotify.cpp
     make -j$((`nproc`+1))
     
     # Compile Stratum
-    cd $HOME/yiimp/stratum/
+    cd $HOME/yiimp-cryptoverse.eu/stratum/
     git submodule init && git submodule update 
     make -C algos
     make -C sha3
     make -C iniparser
     cd secp256k1 && chmod +x autogen.sh && ./autogen.sh && ./configure --enable-experimental --enable-module-ecdh --with-bignum=no --enable-endomorphism && make
-    cd $HOME/yiimp/stratum/
+    cd $HOME/yiimp-cryptoverse.eu/stratum/
     if [[ ("$BTC" == "y" || "$BTC" == "Y") ]]; then
-    sudo sed -i 's/CFLAGS += -DNO_EXCHANGE/#CFLAGS += -DNO_EXCHANGE/' $HOME/yiimp/stratum/Makefile
+    sudo sed -i 's/CFLAGS += -DNO_EXCHANGE/#CFLAGS += -DNO_EXCHANGE/' $HOME/yiimp-cryptoverse.eu/stratum/Makefile
     fi
     make -j$((`nproc`+1))
 
     # Copy Files (Blocknotify,iniparser,Stratum)
     cd $HOME/yiimp
-    sudo sed -i 's/AdminRights/'AdminPanel'/' $HOME/yiimp/web/yaamp/modules/site/SiteController.php
-    sudo cp -r $HOME/yiimp/web /var/
+    sudo sed -i 's/AdminRights/'AdminPanel'/' $HOME/yiimp-cryptoverse.eu/web/yaamp/modules/site/SiteController.php
+    sudo cp -r $HOME/yiimp-cryptoverse.eu/web /var/
     sudo mkdir -p /var/stratum
-    cd $HOME/yiimp/stratum
+    cd $HOME/yiimp-cryptoverse.eu/stratum
     sudo cp -a config.sample/. /var/stratum/config
     sudo cp -r stratum /var/stratum
     sudo cp -r run.sh /var/stratum
-    cd $HOME/yiimp
-    sudo cp -r $HOME/yiimp/bin/. /bin/
-    sudo cp -r $HOME/yiimp/blocknotify/blocknotify /usr/bin/
-    sudo cp -r $HOME/yiimp/blocknotify/blocknotify /var/stratum/
+    cd $HOME/yiimp-cryptoverse.eu
+    sudo cp -r $HOME/yiimp-cryptoverse.eu/bin/. /bin/
+    sudo cp -r $HOME/yiimp-cryptoverse.eu/blocknotify/blocknotify /usr/bin/
+    sudo cp -r $HOME/yiimp-cryptoverse.eu/blocknotify/blocknotify /var/stratum/
     sudo mkdir -p /etc/yiimp
     sudo mkdir -p /$HOME/backup/
     #fixing yiimp
@@ -914,7 +914,7 @@
     sleep 3
     
     cd ~
-    cd yiimp/sql
+    cd yiimp-cryptoverse.eu/sql
     
     # Import sql dump
     sudo zcat 2020-11-10-yaamp.sql.gz | sudo mysql --defaults-group-suffix=host1
@@ -1122,7 +1122,7 @@
     sudo sed -i '14d' /var/web/yaamp/defaultconfig.php
 
     #Misc
-    sudo mv $HOME/yiimp/ $HOME/yiimp-install-only-do-not-run-commands-from-this-folder
+    sudo mv $HOME/yiimp-cryptoverse.eu/ $HOME/yiimp-install-only-do-not-run-commands-from-this-folder
     sudo rm -rf /var/log/nginx/*
     
     #Hold update OpenSSL
